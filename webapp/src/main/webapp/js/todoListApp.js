@@ -96,14 +96,84 @@ var TodoListApp = function (rootDivId, eventbus, events, userService) {
         };
     };
 
+    var LoginComponent = function () {
+
+        var loginBoxId = rootDivId + '_login';
+
+        var _initialize = function () {
+
+            $('#' + rootDivId).append($('<div/>').attr('id', loginBoxId));
+
+            var buttonId = loginBoxId + '_button';
+            var emailInputId = loginBoxId + '_email';
+            var passwordInputId = loginBoxId + '_password';
+
+            var loginMessageId = loginBoxId + '_message';
+
+            $('#' + loginBoxId).html($('<fieldset/>'));
+            $('<legend/>').text('Login').appendTo($('fieldset'));
+            $('<input/>').attr('id', emailInputId).attr({
+                'type': 'text',
+                'placeholder': 'Email'
+            }).appendTo($('fieldset'));
+            $('<br>').appendTo($('fieldset'));
+            $('<br>').appendTo($('fieldset'));
+            $('<input/>').attr('id', passwordInputId).attr({
+                'type': 'password',
+                'placeholder': 'Password'
+            }).appendTo($('fieldset'));
+            $('<br>').appendTo($('fieldset'));
+            $('<br>').appendTo($('fieldset'));
+            $('<p/>').attr('id', loginMessageId).text('').appendTo($('fieldset'));
+            $('<button/>').attr('id', buttonId).text('Login').appendTo($('fieldset'));
+
+
+            $('#' + buttonId).click(function () {
+
+                var userData = {
+                    email: $('#' + emailInputId).val(),
+                    password: $('#' + passwordInputId).val()
+
+                };
+
+                console.log('Trying to login user ' + userData.email);
+                eventbus.post(events.ATTEMPT_TO_LOGIN, userData);
+
+            });
+        };
+
+        var _displayLoginError = function (failLoginEvent) {
+
+            var errorElementRootId = loginBoxId + '_message';
+
+            $('#' + errorElementRootId).html($('<p/>').attr('style', 'color:red; font-size:14; font-family:"Calibri"')
+                .text(failLoginEvent.errorMessage));
+        };
+
+        var _closeLoginForm = function () {
+
+            $('#' + loginBoxId).remove();
+        };
+
+        return {
+            "init": _initialize,
+            "showLoginError": _displayLoginError,
+            "closeLoginForm": _closeLoginForm
+        };
+    };
 
     var registrationComponent = new RegistrationComponent();
+    var loginComponent = new LoginComponent();
 
     registrationComponent.init();
 
     eventbus.subscribe(events.ATTEMPT_TO_REGISTER, userService.registerUser);
     eventbus.subscribe(events.REGISTRATION_FAILED, registrationComponent.showRegistrationError);
     eventbus.subscribe(events.USER_IS_REGISTERED, registrationComponent.showSuccessfulRegistrationMessage);
+    eventbus.subscribe(events.ATTEMPT_TO_RENDER_LOGIN_FORM, loginComponent.init);
+    eventbus.subscribe(events.ATTEMPT_TO_LOGIN, userService.loginUser);
+    eventbus.subscribe(events.LOGIN_FAILED, loginComponent.showLoginError);
+    eventbus.subscribe(events.USER_IS_LOGGED_IN, loginComponent.closeLoginForm);
 
 };
 
