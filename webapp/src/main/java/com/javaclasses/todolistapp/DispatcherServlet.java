@@ -2,6 +2,7 @@ package com.javaclasses.todolistapp;
 
 
 import com.javaclasses.todolistapp.controllers.Handler;
+import com.javaclasses.todolistapp.controllers.UserController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +12,24 @@ import java.io.IOException;
 
 public class DispatcherServlet extends HttpServlet {
 
+    static {
+        UserController.getInstance();
+    }
+
     private final HandlerRegistry handlerRegistry = HandlerRegistry.getInstance();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        process(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        process(request, response);
 
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         final String uri = request.getRequestURI();
         final String method = request.getMethod();
