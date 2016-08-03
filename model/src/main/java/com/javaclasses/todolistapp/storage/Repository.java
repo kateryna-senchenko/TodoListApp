@@ -13,4 +13,6 @@ public interface Repository<TypeId, Type> {
 
     Collection<Type> getAll();
 
+    Type remove(TypeId id);
+
 }

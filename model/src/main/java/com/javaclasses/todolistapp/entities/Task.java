@@ -1,4 +1,4 @@
-package com.javaclasses.todolistapp.dto;
+package com.javaclasses.todolistapp.entities;
 
 import com.javaclasses.todolistapp.tinytypes.TaskId;
 import com.javaclasses.todolistapp.tinytypes.UserId;
@@ -6,21 +6,27 @@ import com.javaclasses.todolistapp.tinytypes.UserId;
 import java.time.LocalDate;
 
 /**
- * Task DTO
+ * Task entity
  */
-public class TaskDto {
+public class Task {
 
-    private final TaskId taskId;
+    private TaskId taskId;
     private final UserId userId;
     private final String taskDescription;
     private final LocalDate dateCreation;
-    private final boolean done;
+    private boolean done = false;
 
-    public TaskDto(TaskId taskId, UserId userId, String taskDescription, LocalDate dateCreation, boolean done) {
-        this.taskId = taskId;
+    public Task(UserId userId, String taskDescription, LocalDate dateCreation) {
         this.userId = userId;
         this.taskDescription = taskDescription;
         this.dateCreation = dateCreation;
+    }
+
+    public void setTaskId(TaskId taskId) {
+        this.taskId = taskId;
+    }
+
+    public void setDone(boolean done) {
         this.done = done;
     }
 
@@ -49,13 +55,13 @@ public class TaskDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TaskDto taskDto = (TaskDto) o;
+        Task task = (Task) o;
 
-        if (done != taskDto.done) return false;
-        if (!taskId.equals(taskDto.taskId)) return false;
-        if (!userId.equals(taskDto.userId)) return false;
-        if (!taskDescription.equals(taskDto.taskDescription)) return false;
-        return dateCreation.equals(taskDto.dateCreation);
+        if (done != task.done) return false;
+        if (!taskId.equals(task.taskId)) return false;
+        if (!userId.equals(task.userId)) return false;
+        if (!taskDescription.equals(task.taskDescription)) return false;
+        return dateCreation.equals(task.dateCreation);
 
     }
 
