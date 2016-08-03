@@ -1,4 +1,4 @@
-rootProject.name = 'todolist'
+rootProject.name = 'todolistapp'
 include 'model'
 include 'webapp'
 

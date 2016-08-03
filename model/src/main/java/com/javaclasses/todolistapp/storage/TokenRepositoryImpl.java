@@ -1,7 +1,7 @@
-package com.javaclasses.todolist.storage;
+package com.javaclasses.todolistapp.storage;
 
-import com.javaclasses.todolist.entities.Token;
-import com.javaclasses.todolist.tinytypes.TokenId;
+import com.javaclasses.todolistapp.entities.Token;
+import com.javaclasses.todolistapp.tinytypes.TokenId;
 
 import java.util.UUID;
 

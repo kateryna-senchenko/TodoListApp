@@ -1,4 +1,4 @@
-package com.javaclasses.todolist;
+package com.javaclasses.todolistapp;
 
 /**
  * Exception that indicates authentication failure

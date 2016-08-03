@@ -1,6 +1,6 @@
-package com.javaclasses.todolist.dto;
+package com.javaclasses.todolistapp.dto;
 
-import com.javaclasses.todolist.tinytypes.UserId;
+import com.javaclasses.todolistapp.tinytypes.UserId;
 
 /**
  * User DTO

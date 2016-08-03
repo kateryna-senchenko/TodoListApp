@@ -1,4 +1,4 @@
-package com.javaclasses.todolist.storage;
+package com.javaclasses.todolistapp.storage;
 
 import java.util.Collection;
 import java.util.Map;

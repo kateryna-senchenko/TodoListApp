@@ -1,4 +1,4 @@
-package com.javaclasses.todolist;
+package com.javaclasses.todolistapp;
 
 /**
  * Enum of error types and corresponding messages

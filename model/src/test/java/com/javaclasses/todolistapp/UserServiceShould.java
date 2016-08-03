@@ -1,15 +1,19 @@
-package com.javaclasses.todolist;
+package com.javaclasses.todolistapp;
 
 
-import com.javaclasses.todolist.dto.LoginDto;
-import com.javaclasses.todolist.dto.RegistrationDto;
-import com.javaclasses.todolist.dto.TokenDto;
-import com.javaclasses.todolist.dto.UserDto;
-import com.javaclasses.todolist.impl.UserServiceImpl;
-import com.javaclasses.todolist.tinytypes.UserId;
+import com.javaclasses.todolistapp.dto.LoginDto;
+import com.javaclasses.todolistapp.dto.RegistrationDto;
+import com.javaclasses.todolistapp.dto.TokenDto;
+import com.javaclasses.todolistapp.dto.UserDto;
+import com.javaclasses.todolistapp.impl.UserServiceImpl;
+import com.javaclasses.todolistapp.tinytypes.UserId;
 import org.junit.Test;
 
-import static com.javaclasses.todolist.ErrorType.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.javaclasses.todolistapp.ErrorType.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -185,4 +189,6 @@ public class UserServiceShould {
         }
 
     }
+
+
 }

@@ -1,19 +1,19 @@
-package com.javaclasses.todolist.impl;
+package com.javaclasses.todolistapp.impl;
 
-import com.javaclasses.todolist.AuthenticationException;
-import com.javaclasses.todolist.RegistrationException;
-import com.javaclasses.todolist.UserService;
-import com.javaclasses.todolist.dto.LoginDto;
-import com.javaclasses.todolist.dto.RegistrationDto;
-import com.javaclasses.todolist.dto.TokenDto;
-import com.javaclasses.todolist.dto.UserDto;
-import com.javaclasses.todolist.entities.Token;
-import com.javaclasses.todolist.entities.User;
-import com.javaclasses.todolist.storage.Repository;
-import com.javaclasses.todolist.storage.TokenRepositoryImpl;
-import com.javaclasses.todolist.storage.UserRepositoryImpl;
-import com.javaclasses.todolist.tinytypes.TokenId;
-import com.javaclasses.todolist.tinytypes.UserId;
+import com.javaclasses.todolistapp.AuthenticationException;
+import com.javaclasses.todolistapp.RegistrationException;
+import com.javaclasses.todolistapp.UserService;
+import com.javaclasses.todolistapp.dto.LoginDto;
+import com.javaclasses.todolistapp.dto.RegistrationDto;
+import com.javaclasses.todolistapp.dto.TokenDto;
+import com.javaclasses.todolistapp.dto.UserDto;
+import com.javaclasses.todolistapp.entities.Token;
+import com.javaclasses.todolistapp.entities.User;
+import com.javaclasses.todolistapp.storage.Repository;
+import com.javaclasses.todolistapp.storage.TokenRepositoryImpl;
+import com.javaclasses.todolistapp.storage.UserRepositoryImpl;
+import com.javaclasses.todolistapp.tinytypes.TokenId;
+import com.javaclasses.todolistapp.tinytypes.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.javaclasses.todolist.ErrorType.*;
+import static com.javaclasses.todolistapp.ErrorType.*;
 
 /**
  * Implementation of the UserService interface

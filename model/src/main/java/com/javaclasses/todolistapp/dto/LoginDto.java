@@ -1,4 +1,4 @@
-package com.javaclasses.todolist.dto;
+package com.javaclasses.todolistapp.dto;
 
 /**
  * Contains login parameters

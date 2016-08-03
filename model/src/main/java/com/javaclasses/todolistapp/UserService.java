@@ -1,10 +1,10 @@
-package com.javaclasses.todolist;
+package com.javaclasses.todolistapp;
 
-import com.javaclasses.todolist.dto.LoginDto;
-import com.javaclasses.todolist.dto.RegistrationDto;
-import com.javaclasses.todolist.dto.TokenDto;
-import com.javaclasses.todolist.dto.UserDto;
-import com.javaclasses.todolist.tinytypes.UserId;
+import com.javaclasses.todolistapp.dto.LoginDto;
+import com.javaclasses.todolistapp.dto.RegistrationDto;
+import com.javaclasses.todolistapp.dto.TokenDto;
+import com.javaclasses.todolistapp.dto.UserDto;
+import com.javaclasses.todolistapp.tinytypes.UserId;
 
 /**
  * User Service public API

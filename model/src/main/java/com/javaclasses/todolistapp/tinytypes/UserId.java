@@ -1,4 +1,4 @@
-package com.javaclasses.todolist.tinytypes;
+package com.javaclasses.todolistapp.tinytypes;
 
 /**
  * Custom data type for user id

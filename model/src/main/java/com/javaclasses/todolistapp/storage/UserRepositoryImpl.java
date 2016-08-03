@@ -1,7 +1,7 @@
-package com.javaclasses.todolist.storage;
+package com.javaclasses.todolistapp.storage;
 
-import com.javaclasses.todolist.entities.User;
-import com.javaclasses.todolist.tinytypes.UserId;
+import com.javaclasses.todolistapp.entities.User;
+import com.javaclasses.todolistapp.tinytypes.UserId;
 
 import java.util.concurrent.atomic.AtomicLong;
 
