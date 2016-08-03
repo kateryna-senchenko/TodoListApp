@@ -16,5 +16,6 @@ public class Parameters {
 
     public static final String TASK_ID = "taskId";
     public static final String TASK_DESCRIPTION = "taskDescription";
+    public static final String TASK_STATUS = "taskStatus";
     public static final String TASK_LIST = "taskList";
 }

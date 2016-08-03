@@ -16,12 +16,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.javaclasses.todolistapp.Parameters.CONFIRM_PASSWORD;
-import static com.javaclasses.todolistapp.Parameters.EMAIL;
-import static com.javaclasses.todolistapp.Parameters.PASSWORD;
-import static com.javaclasses.todolistapp.UrlConstants.BASE_URL;
-import static com.javaclasses.todolistapp.UrlConstants.LOGIN_URL;
-import static com.javaclasses.todolistapp.UrlConstants.REGISTRATION_URL;
+import static com.javaclasses.todolistapp.Parameters.*;
+import static com.javaclasses.todolistapp.UrlConstants.*;
 import static org.apache.http.HttpHeaders.USER_AGENT;
 
 public class TestUtils {
@@ -29,7 +25,8 @@ public class TestUtils {
     private final static HttpClient client = HttpClientBuilder.create().build();
 
     /*package*/
-    static HttpResponse sendRegistrationRequest(String email, String password, String confirmPassword) throws IOException {
+    static HttpResponse sendRegistrationRequest(String email, String password, String confirmPassword)
+            throws IOException {
 
         final String registrationUrl = BASE_URL + REGISTRATION_URL;
 
@@ -52,6 +49,60 @@ public class TestUtils {
 
         return sendRequest(loginUrl, parameters);
     }
+
+    /*package*/
+    static HttpResponse sendTaskCreationRequest(String tokenId, String userId, String taskDescription)
+            throws IOException {
+
+        final String createTaskUrl = BASE_URL + CREATE_TASK_URL;
+
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair(TOKEN_ID, tokenId));
+        parameters.add(new BasicNameValuePair(USER_ID, userId));
+        parameters.add(new BasicNameValuePair(TASK_DESCRIPTION, taskDescription));
+
+        return sendRequest(createTaskUrl, parameters);
+    }
+
+    /*package*/
+    static HttpResponse sendMarkAsDoneRequest(String tokenId, String userId, String taskId) throws IOException {
+
+        final String markAsDoneUrl = BASE_URL + MARK_AS_DONE_URL;
+
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair(TOKEN_ID, tokenId));
+        parameters.add(new BasicNameValuePair(USER_ID, userId));
+        parameters.add(new BasicNameValuePair(TASK_ID, taskId));
+
+        return sendRequest(markAsDoneUrl, parameters);
+    }
+
+    /*package*/
+    static HttpResponse sendUndoTaskRequest(String tokenId, String userId, String taskId) throws IOException {
+
+        final String undoUrl = BASE_URL + UNDO_TASK_URL;
+
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair(TOKEN_ID, tokenId));
+        parameters.add(new BasicNameValuePair(USER_ID, userId));
+        parameters.add(new BasicNameValuePair(TASK_ID, taskId));
+
+        return sendRequest(undoUrl, parameters);
+    }
+
+    /*package*/
+    static HttpResponse sendDeleteTaskRequest(String tokenId, String userId, String taskId) throws IOException {
+
+        final String deleteTaskUrl = BASE_URL + DELETE_TASK_URL;
+
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair(TOKEN_ID, tokenId));
+        parameters.add(new BasicNameValuePair(USER_ID, userId));
+        parameters.add(new BasicNameValuePair(TASK_ID, taskId));
+
+        return sendRequest(deleteTaskUrl, parameters);
+    }
+
 
     /*package*/
     static JSONObject getResponseContent(HttpResponse response) throws IOException {

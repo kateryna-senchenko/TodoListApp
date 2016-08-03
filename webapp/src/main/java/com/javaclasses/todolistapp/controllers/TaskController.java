@@ -128,6 +128,7 @@ public class TaskController {
             }
 
             taskService.markTaskAsDone(new TaskId(Long.valueOf(taskId)));
+            final TaskDto taskDto = taskService.findTaskById(new TaskId(Long.valueOf(taskId)));
 
             List<TaskDto> allUserTasks = taskService.findsAllUserTasks(new UserId(Long.valueOf(userId)));
 
@@ -137,6 +138,7 @@ public class TaskController {
             handlerProcessingResult.setData(TOKEN_ID, tokenId);
             handlerProcessingResult.setData(USER_ID, userId);
             handlerProcessingResult.setData(TASK_ID, taskId);
+            handlerProcessingResult.setData(TASK_STATUS, String.valueOf(taskDto.isDone()));
             handlerProcessingResult.setData(TASK_LIST, allTasks.toString());
 
 
@@ -171,6 +173,7 @@ public class TaskController {
             }
 
             taskService.undoTask(new TaskId(Long.valueOf(taskId)));
+            final TaskDto taskDto = taskService.findTaskById(new TaskId(Long.valueOf(taskId)));
 
             List<TaskDto> allUserTasks = taskService.findsAllUserTasks(new UserId(Long.valueOf(userId)));
 
@@ -180,6 +183,7 @@ public class TaskController {
             handlerProcessingResult.setData(TOKEN_ID, tokenId);
             handlerProcessingResult.setData(USER_ID, userId);
             handlerProcessingResult.setData(TASK_ID, taskId);
+            handlerProcessingResult.setData(TASK_STATUS, String.valueOf(taskDto.isDone()));
             handlerProcessingResult.setData(TASK_LIST, allTasks.toString());
 
 

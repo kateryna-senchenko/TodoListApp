@@ -57,7 +57,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskId(taskId);
 
         if (log.isInfoEnabled()) {
-            log.info("User {} created new task with id {}", taskCreationDto.getUserId(), taskId);
+            log.info("User {} created new task with id {}", taskCreationDto.getUserId().getId(), taskId.getId());
         }
 
         return taskId;
@@ -82,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDone(false);
 
         if (log.isInfoEnabled()) {
-            log.info("Task {} was marked undone", taskId);
+            log.info("Task {} was marked undone", taskId.getId());
         }
     }
 
@@ -92,7 +92,7 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.remove(taskId);
 
         if (log.isInfoEnabled()) {
-            log.info("Task {} was deleted", taskId);
+            log.info("Task {} was deleted", taskId.getId());
         }
 
     }
