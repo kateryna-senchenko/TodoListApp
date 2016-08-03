@@ -3,6 +3,7 @@ package com.javaclasses.todolist;
 import com.javaclasses.todolist.dto.LoginDto;
 import com.javaclasses.todolist.dto.RegistrationDto;
 import com.javaclasses.todolist.dto.TokenDto;
+import com.javaclasses.todolist.dto.UserDto;
 import com.javaclasses.todolist.tinytypes.UserId;
 
 /**
@@ -25,5 +26,19 @@ public interface UserService {
      * @throws AuthenticationException if authentication fails
      */
     TokenDto login(LoginDto loginDto) throws AuthenticationException;
+
+    /**
+     * Provides access to registered user dto by user id
+     * @param id - user id
+     * @return user dto
+     */
+    UserDto findRegisteredUserById(UserId id);
+
+    /**
+     * Provides access to authenticated user dto by token
+     * @param token - access token DTO
+     * @return user dto instance
+     */
+    UserDto findAuthenticatedUserByToken(TokenDto token);
 
 }
