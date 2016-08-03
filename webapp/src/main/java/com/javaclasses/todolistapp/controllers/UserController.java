@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.javaclasses.todolistapp.Parameters.*;
+import static com.javaclasses.todolistapp.UrlConstants.LOGIN_URL;
+import static com.javaclasses.todolistapp.UrlConstants.REGISTRATION_URL;
 
 
 /**
@@ -37,7 +39,7 @@ public class UserController {
 
     private void register() {
 
-        handlerRegistry.registerHandler(new CompoundKey("/app/registration", "POST"), request -> {
+        handlerRegistry.registerHandler(new CompoundKey(REGISTRATION_URL, "POST"), request -> {
 
             final String email = request.getParameter(EMAIL);
             final String password = request.getParameter(PASSWORD);
@@ -74,7 +76,7 @@ public class UserController {
 
     private void loginUser() {
 
-        handlerRegistry.registerHandler(new CompoundKey("/app/login", "POST"), request -> {
+        handlerRegistry.registerHandler(new CompoundKey(LOGIN_URL, "POST"), request -> {
 
             final String email = request.getParameter(EMAIL);
             final String password = request.getParameter(PASSWORD);
