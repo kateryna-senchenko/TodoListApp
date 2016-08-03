@@ -1,4 +1,4 @@
-var TodoListApp = function (rootDivId, eventbus, events, userService) {
+var TodoListApp = function (rootDivId, eventbus, events, userService, taskService) {
 
     var RegistrationComponent = function () {
 

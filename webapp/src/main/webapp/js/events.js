@@ -8,7 +8,10 @@ var Events = {
 
     ATTEMPT_TO_LOGIN: 'attemptToLogin',
     LOGIN_FAILED: 'loginFailed',
-    USER_IS_LOGGED_IN: 'userIsLoggedIn'
+    USER_IS_LOGGED_IN: 'userIsLoggedIn',
+
+    UPDATED_TASK_LIST: 'updatedTaskList',
+    TASK_CREATION_FAILED: 'taskCreationFailed'
 
 };
 

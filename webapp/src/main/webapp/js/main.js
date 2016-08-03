@@ -10,7 +10,10 @@ define(function (require) {
     var UserService = require('./services/userService');
     var userService = new UserService(eventBus, events, baseUrl);
 
+    var TaskService = require('./services/taskService');
+    var taskService = new TaskService(eventBus, events, baseUrl);
+
     var TodoListApp = require('./todoListApp');
-    var todoListApp = new TodoListApp("app", eventBus, events, userService);
+    var todoListApp = new TodoListApp("app", eventBus, events, userService, taskService);
 
 });
