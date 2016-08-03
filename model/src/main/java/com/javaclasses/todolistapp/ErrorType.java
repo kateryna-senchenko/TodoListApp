@@ -11,7 +11,9 @@ public enum ErrorType {
     PASSWORD_IS_EMPTY("Password should not be empty"),
     PASSWORDS_DO_NOT_MATCH("Passwords do not match"),
 
-    AUTHENTICATION_FAILED("Specified combination of email and password was not found");
+    AUTHENTICATION_FAILED("Specified combination of email and password was not found"),
+
+    TASK_DESCRIPTION_IS_EMPTY("Task description should not be empty");
 
     private final String message;
 
