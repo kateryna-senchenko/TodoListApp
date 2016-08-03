@@ -190,5 +190,58 @@ public class UserServiceShould {
 
     }
 
+    @Test
+    public void beSafeInMultithreading() throws ExecutionException, InterruptedException {
 
+        final int count = 100;
+        final ExecutorService executor = Executors.newFixedThreadPool(count);
+        final CountDownLatch startLatch = new CountDownLatch(count);
+        final List<Future<TokenDto>> results = new ArrayList<>();
+        AtomicInteger someDifferenceInEmail = new AtomicInteger(0);
+
+        Callable<TokenDto> callable = () -> {
+
+            startLatch.countDown();
+            startLatch.await();
+
+            final String email = "email" + someDifferenceInEmail.getAndIncrement() + "@gmail.com";
+            final String password = "password";
+
+            final RegistrationDto registrationData = new RegistrationDto(email, password, password);
+
+            final UserId userId = userService.register(registrationData);
+
+            final LoginDto loginData = new LoginDto(email, password);
+
+            final TokenDto tokenDto = userService.login(loginData);
+
+            assertEquals("User ids after registration and login are not the same", userId, tokenDto.getUserId());
+
+            return tokenDto;
+        };
+
+        for (int i = 0; i < count; i++) {
+
+            Future<TokenDto> future = executor.submit(callable);
+            results.add(future);
+        }
+
+        final Set<Long> userIds = new HashSet<>();
+        final Set<UUID> tokenIds = new HashSet<>();
+
+        for (Future<TokenDto> future : results) {
+            userIds.add(future.get().getUserId().getId());
+            tokenIds.add(future.get().getTokenId().getId());
+
+        }
+
+        if (userIds.size() != count) {
+            fail("Generated user ids are not unique");
+        }
+
+        if (tokenIds.size() != count) {
+            fail("Generated tokens are not unique");
+        }
+
+    }
 }
