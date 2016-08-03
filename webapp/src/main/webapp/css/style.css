@@ -1,0 +1,33 @@
+fieldset{
+    width: 15%;
+    height: auto;
+}
+
+label{
+    font-family: Calibri, serif;
+    font-size: 20px;
+    color: darkslategrey;
+}
+
+legend{
+    font-family: Calibri, serif;
+}
+
+input{
+    display: block;
+    border: none;
+    font-size: 12px;
+    height: auto;
+    float: left;
+    margin-left: 10px;
+    border-radius: 5px;
+    outline: 0;
+    padding: 10px;
+    width: auto;
+    background: #e8eeef;
+    color: darkslategrey;
+}
+
+button{
+    margin-left: 25px;
+}
