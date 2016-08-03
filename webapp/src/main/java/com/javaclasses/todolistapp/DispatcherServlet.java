@@ -2,6 +2,7 @@ package com.javaclasses.todolistapp;
 
 
 import com.javaclasses.todolistapp.controllers.Handler;
+import com.javaclasses.todolistapp.controllers.TaskController;
 import com.javaclasses.todolistapp.controllers.UserController;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ public class DispatcherServlet extends HttpServlet {
 
     static {
         UserController.getInstance();
+        TaskController.getInstance();
     }
 
     private final HandlerRegistry handlerRegistry = HandlerRegistry.getInstance();

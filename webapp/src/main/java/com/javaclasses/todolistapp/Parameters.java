@@ -13,4 +13,8 @@ public class Parameters {
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String TOKEN_ID = "tokenId";
+
+    public static final String TASK_ID = "taskId";
+    public static final String TASK_DESCRIPTION = "taskDescription";
+    public static final String TASK_LIST = "taskList";
 }
