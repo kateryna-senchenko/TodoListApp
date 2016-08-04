@@ -206,10 +206,10 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
             $('<br>').appendTo($('fieldset'));
 
 
-
             var tasks = JSON.parse(taskData.taskList);
 
             var noTasksId = todoListBoxId + "_noTasks";
+
             if (tasks.length === 0) {
 
                 $('<table/>').attr('id', noTasksId).appendTo($('fieldset'));
@@ -227,11 +227,12 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                     if (obj.done === false) {
 
-                        var removeButtonId = obj.taskId;
+                        var checkboxId = obj.taskId.id;
+                        var removeButtonId = obj.taskId.id;
 
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
-                                .append($('<input/>').attr({'id': obj.taskId, 'type': 'checkbox'})))
+                                .append($('<input/>').attr({'id': checkboxId, 'type': 'checkbox', 'class': 'undone'})))
                             .append($('<td/>').attr('class', 'column2')
                                 .append($('<span/>').attr('class', 'normal').text(obj.taskDescription)))
                             .append($('<td/>').attr('class', 'column3')
@@ -248,9 +249,10 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
                                 .append($('<input/>').attr({
-                                    'id': obj.taskId,
+                                    'id': obj.taskId.id,
                                     'type': 'checkbox',
-                                    'checked': true
+                                    'checked': true,
+                                    'class': 'checked'
                                 })))
                             .append($('<td/>').attr('class', 'column2')
                                 .append($('<span/>').attr('class', 'done').text(obj.taskDescription)))
@@ -264,22 +266,33 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                     }
 
-                    $('#' + removeButtonId).click(function () {
-
-                        var taskData = {
-                            tokenId: taskData.tokenId,
-                            userId: taskData.userId,
-                            taskId: removeButtonId
-                        };
-
-                        console.log('Trying to delete task ' + taskData.taskId);
-                        eventbus.post(events.ATTEMPT_TO_DELETE_TASK, taskData);
-
-                    });
-
                 });
-
             }
+
+            $('.undone').click(function ()  {
+                var newTaskData = {
+                    tokenId: taskData.tokenId,
+                    userId: taskData.userId,
+                    taskId: $(this).attr('id')
+                };
+
+                console.log("Trying to mark task " + newTaskData.taskId + " done");
+                eventbus.post(events.ATTEMPT_TO_MARK_TASK_DONE, newTaskData);
+
+            });
+
+            $('.checked').click(function ()  {
+                var newTaskData = {
+                    tokenId: taskData.tokenId,
+                    userId: taskData.userId,
+                    taskId: $(this).attr('id')
+                };
+
+                console.log("Trying to undo task " + newTaskData.taskId);
+                eventbus.post(events.ATTEMPT_TO_UNDO_TASK, newTaskData);
+
+            });
+
         };
 
         var _showErrorMessage = function (data) {
@@ -313,6 +326,8 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     eventbus.subscribe(events.ATTEMPT_TO_CREATE_TASK, taskService.createTask);
     eventbus.subscribe(events.TASK_CREATION_FAILED, todoListComponent.showErrorMessage);
     eventbus.subscribe(events.UPDATED_TASK_LIST, todoListComponent.init);
+    eventbus.subscribe(events.ATTEMPT_TO_MARK_TASK_DONE, taskService.markAsDone);
+    eventbus.subscribe(events.ATTEMPT_TO_UNDO_TASK, taskService.undoTask);
     eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.createTask);
 
 };
