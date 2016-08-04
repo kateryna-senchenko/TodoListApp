@@ -70,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDone(true);
 
         if (log.isInfoEnabled()) {
-            log.info("Task {} was marked as done", taskId);
+            log.info("Task {} was marked as done", taskId.getId());
         }
 
     }

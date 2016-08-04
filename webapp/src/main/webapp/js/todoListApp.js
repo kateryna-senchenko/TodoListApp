@@ -224,15 +224,19 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                 $.each(tasks, function(idx, obj){
 
+                    var checkboxId = obj.taskId.id;
+                    var removeButtonId = obj.taskId.id;
 
                     if (obj.done === false) {
 
-                        var checkboxId = obj.taskId.id;
-                        var removeButtonId = obj.taskId.id;
 
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
-                                .append($('<input/>').attr({'id': checkboxId, 'type': 'checkbox', 'class': 'undone'})))
+                                .append($('<input/>').attr({
+                                    'id': checkboxId,
+                                    'type': 'checkbox',
+                                    'class': 'undone'
+                                })))
                             .append($('<td/>').attr('class', 'column2')
                                 .append($('<span/>').attr('class', 'normal').text(obj.taskDescription)))
                             .append($('<td/>').attr('class', 'column3')
@@ -249,7 +253,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
                                 .append($('<input/>').attr({
-                                    'id': obj.taskId.id,
+                                    'id': checkboxId,
                                     'type': 'checkbox',
                                     'checked': true,
                                     'class': 'checked'
@@ -293,6 +297,18 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
             });
 
+            $('.removeButton').click(function ()  {
+                var newTaskData = {
+                    tokenId: taskData.tokenId,
+                    userId: taskData.userId,
+                    taskId: $(this).attr('id')
+                };
+
+                console.log("Trying to delete task " + newTaskData.taskId);
+                eventbus.post(events.ATTEMPT_TO_DELETE_TASK, newTaskData);
+
+            });
+
         };
 
         var _showErrorMessage = function (data) {
@@ -328,7 +344,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     eventbus.subscribe(events.UPDATED_TASK_LIST, todoListComponent.init);
     eventbus.subscribe(events.ATTEMPT_TO_MARK_TASK_DONE, taskService.markAsDone);
     eventbus.subscribe(events.ATTEMPT_TO_UNDO_TASK, taskService.undoTask);
-    eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.createTask);
+    eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.deleteTask);
 
 };
 

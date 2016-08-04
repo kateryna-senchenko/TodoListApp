@@ -26,7 +26,7 @@ import static com.javaclasses.todolistapp.UrlConstants.*;
  */
 public class TaskController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     private static TaskController taskController = new TaskController();
 
