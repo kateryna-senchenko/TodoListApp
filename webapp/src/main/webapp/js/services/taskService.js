@@ -15,6 +15,8 @@ var TaskService = function (eventbus, events, baseUrl) {
             }, function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+
+                console.log("New task was created");
                 eventbus.post(events.UPDATED_TASK_LIST, data);
 
             }, 'text')
@@ -41,6 +43,7 @@ var TaskService = function (eventbus, events, baseUrl) {
             function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+                console.log("Task was marked as done");
                 eventbus.post(events.UPDATED_TASK_LIST, data);
 
             }, 'text')
@@ -62,6 +65,7 @@ var TaskService = function (eventbus, events, baseUrl) {
             function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+                console.log("Task was marked as undone");
                 eventbus.post(events.UPDATED_TASK_LIST, data);
 
             }, 'text')
@@ -83,6 +87,7 @@ var TaskService = function (eventbus, events, baseUrl) {
             function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+                console.log("Task was deleted");
                 eventbus.post(events.UPDATED_TASK_LIST, data);
 
             }, 'text')

@@ -15,6 +15,8 @@ var UserService = function (eventbus, events, baseUrl) {
             }, function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+
+                console.log("User is registered");
                 eventbus.post(events.USER_IS_REGISTERED, data);
 
             }, 'text')
@@ -45,7 +47,7 @@ var UserService = function (eventbus, events, baseUrl) {
                 };
 
                 sessionStorage.setItem("session", JSON.stringify(_session));
-
+                console.log("User is logged in");
                 eventbus.post(events.USER_IS_LOGGED_IN, data);
 
             }, 'text')
