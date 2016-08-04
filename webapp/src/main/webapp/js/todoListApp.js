@@ -206,9 +206,8 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
             $('<br>').appendTo($('fieldset'));
 
 
-            var tasks = $.map(JSON.parse(taskData.taskList), function (element) {
-                return element;
-            });
+
+            var tasks = JSON.parse(taskData.taskList);
 
             var noTasksId = todoListBoxId + "_noTasks";
             if (tasks.length === 0) {
@@ -223,19 +222,20 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                 $('<table/>').attr('id', 'tasks').appendTo($('fieldset'));
 
-                for (var i = 0; i < tasks.length; i++) {
+                $.each(tasks, function(idx, obj){
 
-                    if (!tasks[i].done) {
 
-                        var removeButtonId = tasks[i].taskId;
+                    if (obj.done === false) {
+
+                        var removeButtonId = obj.taskId;
 
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
-                                .append($('<input/>').attr({'id': tasks[i].taskId, 'type': 'checkbox'})))
+                                .append($('<input/>').attr({'id': obj.taskId, 'type': 'checkbox'})))
                             .append($('<td/>').attr('class', 'column2')
-                                .append($('<span/>').attr('class', 'normal').text(tasks[i].taskDescription)))
+                                .append($('<span/>').attr('class', 'normal').text(obj.taskDescription)))
                             .append($('<td/>').attr('class', 'column3')
-                                .append($('<span/>').attr('class', 'normal').text(tasks[i].creationDate)))
+                                .append($('<span/>').attr('class', 'normal').text(obj.creationDate)))
                             .append($('<td/>').attr('class', 'column4')
                                 .append($('<button/>').attr({
                                     'id': removeButtonId,
@@ -248,14 +248,14 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
                         $('#tasks').append($('<tr/>')
                             .append($('<td/>').attr('class', 'column1')
                                 .append($('<input/>').attr({
-                                    'id': tasks[i].taskId,
+                                    'id': obj.taskId,
                                     'type': 'checkbox',
                                     'checked': true
                                 })))
                             .append($('<td/>').attr('class', 'column2')
-                                .append($('<span/>').attr('class', 'done').text(tasks[i].taskDescription)))
+                                .append($('<span/>').attr('class', 'done').text(obj.taskDescription)))
                             .append($('<td/>').attr('class', 'column3')
-                                .append($('<span/>').attr('class', 'normal').text(tasks[i].creationDate)))
+                                .append($('<span/>').attr('class', 'normal').text(obj.creationDate)))
                             .append($('<td/>').attr('class', 'column4')
                                 .append($('<button/>').attr({
                                     'id': removeButtonId,
@@ -277,8 +277,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                     });
 
-
-                }
+                });
 
             }
         };
