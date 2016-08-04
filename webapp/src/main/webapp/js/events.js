@@ -17,7 +17,9 @@ var Events = {
     ATTEMPT_TO_UNDO_TASK: 'attemptToUndoTask',
     ATTEMPT_TO_DELETE_TASK: 'attemptToDeleteTask',
 
-    ATTEMPT_TO_UPDATE_TASK_LIST: 'attemptToUpdateTaskList'
+    ATTEMPT_TO_UPDATE_TASK_LIST: 'attemptToUpdateTaskList',
+    ATTEMPT_TO_LOGOUT: 'attemptToLogout',
+    USER_IS_LOGGED_OUT: 'userIsLoggedOut'
 
 };
 

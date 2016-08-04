@@ -143,4 +143,15 @@ public class UserServiceImpl implements UserService {
 
         return findRegisteredUserById(userToken.getUserId());
     }
+
+    @Override
+    public void logout(TokenDto token) {
+
+        tokenRepository.remove(token.getTokenId());
+
+        if (log.isInfoEnabled()) {
+            log.info("Logged out user {}", token.getUserId().getId());
+        }
+
+    }
 }

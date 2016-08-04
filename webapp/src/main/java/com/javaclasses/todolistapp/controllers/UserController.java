@@ -7,6 +7,7 @@ import com.javaclasses.todolistapp.dto.TaskDto;
 import com.javaclasses.todolistapp.dto.TokenDto;
 import com.javaclasses.todolistapp.impl.TaskServiceImpl;
 import com.javaclasses.todolistapp.impl.UserServiceImpl;
+import com.javaclasses.todolistapp.tinytypes.TokenId;
 import com.javaclasses.todolistapp.tinytypes.UserId;
 import org.json.JSONArray;
 import org.slf4j.Logger;
@@ -15,9 +16,11 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.javaclasses.todolistapp.Parameters.*;
 import static com.javaclasses.todolistapp.UrlConstants.LOGIN_URL;
+import static com.javaclasses.todolistapp.UrlConstants.LOGOUT_URL;
 import static com.javaclasses.todolistapp.UrlConstants.REGISTRATION_URL;
 
 
@@ -37,6 +40,7 @@ public class UserController {
     private UserController() {
         register();
         loginUser();
+        logoutUser();
     }
 
     public static UserController getInstance() {
@@ -117,6 +121,38 @@ public class UserController {
             }
 
             return handlerProcessingResult;
+        });
+    }
+
+    private void logoutUser(){
+
+        handlerRegistry.registerHandler(new CompoundKey(LOGOUT_URL, "POST"), request ->{
+
+            final String tokenId = request.getParameter(TOKEN_ID);
+            final String userId = request.getParameter(USER_ID);
+
+            final TokenDto tokenDto =
+                    new TokenDto(new TokenId(UUID.fromString(tokenId)), new UserId(Long.valueOf(userId)));
+
+            HandlerProcessingResult handlerProcessingResult;
+
+            if (userService.findAuthenticatedUserByToken(tokenDto) == null) {
+
+                if (log.isInfoEnabled()) {
+                    log.info("Forbidden operation");
+                }
+
+                handlerProcessingResult = new HandlerProcessingResult(HttpServletResponse.SC_FORBIDDEN);
+                handlerProcessingResult.setData(ERROR_MESSAGE, "Cannot find user");
+            }
+
+            userService.logout(tokenDto);
+
+            handlerProcessingResult = new HandlerProcessingResult(HttpServletResponse.SC_OK);
+            handlerProcessingResult.setData(USER_ID, userId);
+
+            return handlerProcessingResult;
+
         });
     }
 

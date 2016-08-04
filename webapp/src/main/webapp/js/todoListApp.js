@@ -88,11 +88,18 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
         };
 
+        var _removeLoginButton = function () {
+
+            var loginButtonId = registrationBoxId + '_content_loginButton';
+            $('#' + loginButtonId).remove();
+        };
+
 
         return {
             "init": _initialize,
             "showRegistrationError": _displayRegistrationError,
-            "showSuccessfulRegistrationMessage": _displayRegistrationMessage
+            "showSuccessfulRegistrationMessage": _displayRegistrationMessage,
+            "removeLoginButton": _removeLoginButton
         };
     };
 
@@ -110,22 +117,22 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
             var loginMessageId = loginBoxId + '_message';
 
-            $('#' + loginBoxId).html($('<fieldset/>'));
-            $('<legend/>').text('Login').appendTo($('fieldset'));
+            $('#' + loginBoxId).html($('<fieldset/>').attr('class', 'loginBox'));
+            $('<legend/>').text('Login').appendTo($('.loginBox'));
             $('<input/>').attr('id', emailInputId).attr({
                 'type': 'text',
                 'placeholder': 'Email'
-            }).appendTo($('fieldset'));
-            $('<br>').appendTo($('fieldset'));
-            $('<br>').appendTo($('fieldset'));
+            }).appendTo($('.loginBox'));
+            $('<br>').appendTo($('.loginBox'));
+            $('<br>').appendTo($('.loginBox'));
             $('<input/>').attr('id', passwordInputId).attr({
                 'type': 'password',
                 'placeholder': 'Password'
-            }).appendTo($('fieldset'));
-            $('<br>').appendTo($('fieldset'));
-            $('<br>').appendTo($('fieldset'));
-            $('<p/>').attr('id', loginMessageId).text('').appendTo($('fieldset'));
-            $('<button/>').attr('id', buttonId).text('Login').appendTo($('fieldset'));
+            }).appendTo($('.loginBox'));
+            $('<br>').appendTo($('.loginBox'));
+            $('<br>').appendTo($('.loginBox'));
+            $('<p/>').attr('id', loginMessageId).text('').appendTo($('.loginBox'));
+            $('<button/>').attr('id', buttonId).text('Login').appendTo($('.loginBox'));
 
 
             $('#' + buttonId).click(function () {
@@ -205,6 +212,21 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
             $('<br>').appendTo($('fieldset'));
 
+            var logoutButtonId = todoListComponentId + "_logout";
+
+            $('#' + todoListComponentId).append( $('<br>'))
+                .append( $('<br>'))
+                .append($('<button/>').attr('id', logoutButtonId).text("Logout"));
+
+            $('#' + logoutButtonId).click(function () {
+
+                var userData = {
+                    tokenId: taskData.tokenId,
+                    userId: taskData.userId
+                };
+                console.log("User " + taskData.userId + " is trying to logout");
+                eventbus.post(events.ATTEMPT_TO_LOGOUT, userData);
+            });
 
             var tasks = JSON.parse(taskData.taskList);
 
@@ -319,10 +341,30 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
         };
 
+        var _closeTodoList = function () {
+            $('#' + todoListComponentId).remove();
+        };
+
         return {
             "init": _initialize,
-            "showErrorMessage": _showErrorMessage
+            "showErrorMessage": _showErrorMessage,
+            "remove": _closeTodoList
         };
+    };
+
+    var _initializeRegistration = function(){
+
+        registrationComponent.init();
+
+    };
+
+    var _showRegistrationAndLogin = function(data){
+
+        todoListComponent.remove();
+        registrationComponent.init();
+        registrationComponent.removeLoginButton();
+        loginComponent.init();
+
     };
 
     var registrationComponent = new RegistrationComponent();
@@ -344,16 +386,14 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     eventbus.subscribe(events.ATTEMPT_TO_UNDO_TASK, taskService.undoTask);
     eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.deleteTask);
     eventbus.subscribe(events.ATTEMPT_TO_UPDATE_TASK_LIST, taskService.updateUserTasks);
+    eventbus.subscribe(events.ATTEMPT_TO_LOGOUT, userService.logoutUser);
+    eventbus.subscribe(events.USER_IS_LOGGED_OUT, _showRegistrationAndLogin);
 
-    var _initializeRegistration = function(){
-
-        registrationComponent.init();
-
-    };
 
 
     return{
-        "initializeRegistration": _initializeRegistration
+        "initializeRegistration": _initializeRegistration,
+        "showRegistrationAndLogin": _showRegistrationAndLogin
 
     }
 };

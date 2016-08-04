@@ -18,7 +18,11 @@ define(function (require) {
 
     if(!sessionStorage.getItem("session")) {
 
-        todoListApp.initializeRegistration();
+        if(!sessionStorage.getItem("loggedOut")){
+            todoListApp.initializeRegistration();
+        } else {
+            todoListApp.showRegistrationAndLogin();
+        }
 
     } else {
 

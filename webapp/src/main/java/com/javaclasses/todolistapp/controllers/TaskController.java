@@ -269,7 +269,7 @@ public class TaskController {
             handlerProcessingResult.setData(USER_ID, userId);
             handlerProcessingResult.setData(TASK_LIST, allTasks.toString());
 
-            
+
             if (log.isInfoEnabled()) {
                 log.info("Updated tasks of user {}", userId);
             }

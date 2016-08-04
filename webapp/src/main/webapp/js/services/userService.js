@@ -45,7 +45,6 @@ var UserService = function (eventbus, events, baseUrl) {
                 };
 
                 sessionStorage.setItem("session", JSON.stringify(_session));
-                console.log(sessionStorage.getItem("session"));
 
                 eventbus.post(events.USER_IS_LOGGED_IN, data);
 
@@ -58,9 +57,36 @@ var UserService = function (eventbus, events, baseUrl) {
             })
     };
 
+    var _logoutUser = function (userData) {
+
+        var tokenId = userData.tokenId;
+        var userId = userData.userId;
+
+        $.post(baseUrl + "app/logout",
+            {
+                tokenId: tokenId,
+                userId: userId
+            },
+            function (xhr) {
+
+                var data = eval("(" + xhr + ")");
+
+                sessionStorage.removeItem("session");
+                sessionStorage.setItem("loggedOut", "true");
+
+                console.log("User is logged out");
+
+                eventbus.post(events.USER_IS_LOGGED_OUT, data);
+
+            }, 'text')
+
+
+    };
+
     return {
         "registerUser": _registerUser,
-        "loginUser": _loginUser
+        "loginUser": _loginUser,
+        "logoutUser": _logoutUser
     };
 };
 

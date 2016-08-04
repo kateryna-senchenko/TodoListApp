@@ -41,4 +41,10 @@ public interface UserService {
      */
     UserDto findAuthenticatedUserByToken(TokenDto token);
 
+    /**
+     * Logs out user
+     * @param token - access token DTO
+     */
+    void logout(TokenDto token);
+
 }
