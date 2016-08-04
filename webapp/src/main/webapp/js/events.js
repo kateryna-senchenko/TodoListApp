@@ -11,7 +11,9 @@ var Events = {
     USER_IS_LOGGED_IN: 'userIsLoggedIn',
 
     UPDATED_TASK_LIST: 'updatedTaskList',
-    TASK_CREATION_FAILED: 'taskCreationFailed'
+    ATTEMPT_TO_CREATE_TASK: 'attemptToCreateTask',
+    TASK_CREATION_FAILED: 'taskCreationFailed',
+    ATTEMPT_TO_DELETE_TASK: 'attemptToDeleteTask'
 
 };
 

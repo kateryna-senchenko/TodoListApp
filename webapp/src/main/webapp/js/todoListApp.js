@@ -162,8 +162,144 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
         };
     };
 
+    var TodoListComponent = function () {
+
+        var todoListComponentId = rootDivId + '_todo';
+        var todoListBoxId = todoListComponentId + '_content';
+
+        var _initialize = function (taskData) {
+
+            $('#' + rootDivId).html($('<div/>').attr('id', todoListComponentId));
+            $('#' + todoListComponentId).append($('<div/>').attr('id', todoListBoxId));
+
+            $('#' + todoListBoxId).html($('<fieldset/>').attr('class', 'todolist'));
+            $('<legend/>').text('ToDo List').appendTo($('fieldset'));
+
+            var addButtonId = todoListBoxId + '_create';
+            var taskInputId = todoListBoxId + '_newtask';
+            var errorMessage = todoListBoxId + '_erorMessage';
+
+            $('<table/>').attr('id', 'createTask').appendTo($('fieldset'));
+            $('#createTask').append($('<tr/>')
+                .append($('<td/>').attr({'class': 'column2'})
+                    .append($('<input/>').attr('id', taskInputId).attr({
+                        'type': 'text',
+                        'placeholder': 'New task'
+                    })))
+                .append($('<td/>').attr({'class': 'column3'})
+                    .append($('<button/>').attr('id', addButtonId).text('Add'))))
+                .append($('<tr/>').append($('<span/>').attr('id', errorMessage)));
+
+            $('#' + addButtonId).click(function () {
+
+                var newTaskData = {
+                    tokenId: taskData.tokenId,
+                    userId: taskData.userId,
+                    taskDescription: $('#' + taskInputId).val()
+                };
+
+                console.log('Trying to create task ' + newTaskData.taskDescription);
+                eventbus.post(events.ATTEMPT_TO_CREATE_TASK, newTaskData);
+
+            });
+
+            $('<br>').appendTo($('fieldset'));
+
+
+            var tasks = $.map(JSON.parse(taskData.taskList), function (element) {
+                return element;
+            });
+
+            var noTasksId = todoListBoxId + "_noTasks";
+            if (tasks.length === 0) {
+
+                $('<table/>').attr('id', noTasksId).appendTo($('fieldset'));
+                $('#' + noTasksId).append($('<tr/>')
+                    .append($('<td/>').attr('class', 'column2')
+                        .append($('<span/>').attr('class', 'noTasks').text("No tasks yet"))));
+
+
+            } else {
+
+                $('<table/>').attr('id', 'tasks').appendTo($('fieldset'));
+
+                for (var i = 0; i < tasks.length; i++) {
+
+                    if (!tasks[i].done) {
+
+                        var removeButtonId = tasks[i].taskId;
+
+                        $('#tasks').append($('<tr/>')
+                            .append($('<td/>').attr('class', 'column1')
+                                .append($('<input/>').attr({'id': tasks[i].taskId, 'type': 'checkbox'})))
+                            .append($('<td/>').attr('class', 'column2')
+                                .append($('<span/>').attr('class', 'normal').text(tasks[i].taskDescription)))
+                            .append($('<td/>').attr('class', 'column3')
+                                .append($('<span/>').attr('class', 'normal').text(tasks[i].creationDate)))
+                            .append($('<td/>').attr('class', 'column4')
+                                .append($('<button/>').attr({
+                                    'id': removeButtonId,
+                                    'class': 'removeButton'
+                                }).text('Remove'))));
+
+
+                    } else {
+
+                        $('#tasks').append($('<tr/>')
+                            .append($('<td/>').attr('class', 'column1')
+                                .append($('<input/>').attr({
+                                    'id': tasks[i].taskId,
+                                    'type': 'checkbox',
+                                    'checked': true
+                                })))
+                            .append($('<td/>').attr('class', 'column2')
+                                .append($('<span/>').attr('class', 'done').text(tasks[i].taskDescription)))
+                            .append($('<td/>').attr('class', 'column3')
+                                .append($('<span/>').attr('class', 'normal').text(tasks[i].creationDate)))
+                            .append($('<td/>').attr('class', 'column4')
+                                .append($('<button/>').attr({
+                                    'id': removeButtonId,
+                                    'class': 'removeButton'
+                                }).text('Remove'))));
+
+                    }
+
+                    $('#' + removeButtonId).click(function () {
+
+                        var taskData = {
+                            tokenId: taskData.tokenId,
+                            userId: taskData.userId,
+                            taskId: removeButtonId
+                        };
+
+                        console.log('Trying to delete task ' + taskData.taskId);
+                        eventbus.post(events.ATTEMPT_TO_DELETE_TASK, taskData);
+
+                    });
+
+
+                }
+
+            }
+        };
+
+        var _showErrorMessage = function (data) {
+            var errorMessage = todoListBoxId + '_erorMessage';
+
+            $('#' + errorMessage).html($('<span/>').attr('style', 'color:red; font-size:14; font-family:"Calibri"')
+                .text(data.errorMessage));
+
+        };
+
+        return {
+            "init": _initialize,
+            "showErrorMessage": _showErrorMessage
+        };
+    };
+
     var registrationComponent = new RegistrationComponent();
     var loginComponent = new LoginComponent();
+    var todoListComponent = new TodoListComponent();
 
     registrationComponent.init();
 
@@ -174,6 +310,11 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     eventbus.subscribe(events.ATTEMPT_TO_LOGIN, userService.loginUser);
     eventbus.subscribe(events.LOGIN_FAILED, loginComponent.showLoginError);
     eventbus.subscribe(events.USER_IS_LOGGED_IN, loginComponent.closeLoginForm);
+    eventbus.subscribe(events.USER_IS_LOGGED_IN, todoListComponent.init);
+    eventbus.subscribe(events.ATTEMPT_TO_CREATE_TASK, taskService.createTask);
+    eventbus.subscribe(events.TASK_CREATION_FAILED, todoListComponent.showErrorMessage);
+    eventbus.subscribe(events.UPDATED_TASK_LIST, todoListComponent.init);
+    eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.createTask);
 
 };
 

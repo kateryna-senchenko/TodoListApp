@@ -3,13 +3,18 @@ package com.javaclasses.todolistapp.controllers;
 import com.javaclasses.todolistapp.*;
 import com.javaclasses.todolistapp.dto.LoginDto;
 import com.javaclasses.todolistapp.dto.RegistrationDto;
+import com.javaclasses.todolistapp.dto.TaskDto;
 import com.javaclasses.todolistapp.dto.TokenDto;
+import com.javaclasses.todolistapp.impl.TaskServiceImpl;
 import com.javaclasses.todolistapp.impl.UserServiceImpl;
 import com.javaclasses.todolistapp.tinytypes.UserId;
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
 
 import static com.javaclasses.todolistapp.Parameters.*;
 import static com.javaclasses.todolistapp.UrlConstants.LOGIN_URL;
@@ -26,6 +31,7 @@ public class UserController {
     private static UserController userController = new UserController();
 
     private final UserService userService = UserServiceImpl.getInstance();
+    private final TaskService taskService = TaskServiceImpl.getInstance();
     private final HandlerRegistry handlerRegistry = HandlerRegistry.getInstance();
 
     private UserController() {
@@ -87,10 +93,14 @@ public class UserController {
             try {
                 TokenDto token = userService.login(loginDto);
 
+                List<TaskDto> allUserTasks = taskService.findsAllUserTasks(token.getUserId());
+                final JSONArray allTasks = new JSONArray(allUserTasks);
+
                 handlerProcessingResult = new HandlerProcessingResult(HttpServletResponse.SC_OK);
                 handlerProcessingResult.setData(TOKEN_ID, String.valueOf(token.getTokenId().getId()));
                 handlerProcessingResult.setData(USER_ID, String.valueOf(token.getUserId().getId()));
                 handlerProcessingResult.setData(EMAIL, email);
+                handlerProcessingResult.setData(TASK_LIST, allTasks.toString());
 
                 if(log.isInfoEnabled()){
                     log.info("Logged in user {}", email);

@@ -13,13 +13,13 @@ public class Task {
     private TaskId taskId;
     private final UserId userId;
     private final String taskDescription;
-    private final LocalDate dateCreation;
+    private final LocalDate creationDate;
     private boolean done = false;
 
-    public Task(UserId userId, String taskDescription, LocalDate dateCreation) {
+    public Task(UserId userId, String taskDescription, LocalDate creationDate) {
         this.userId = userId;
         this.taskDescription = taskDescription;
-        this.dateCreation = dateCreation;
+        this.creationDate = creationDate;
     }
 
     public void setTaskId(TaskId taskId) {
@@ -42,8 +42,8 @@ public class Task {
         return taskDescription;
     }
 
-    public LocalDate getDateCreation() {
-        return dateCreation;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
     public boolean isDone() {
@@ -61,7 +61,7 @@ public class Task {
         if (!taskId.equals(task.taskId)) return false;
         if (!userId.equals(task.userId)) return false;
         if (!taskDescription.equals(task.taskDescription)) return false;
-        return dateCreation.equals(task.dateCreation);
+        return creationDate.equals(task.creationDate);
 
     }
 
@@ -70,7 +70,7 @@ public class Task {
         int result = taskId.hashCode();
         result = 31 * result + userId.hashCode();
         result = 31 * result + taskDescription.hashCode();
-        result = 31 * result + dateCreation.hashCode();
+        result = 31 * result + creationDate.hashCode();
         result = 31 * result + (done ? 1 : 0);
         return result;
     }

@@ -102,7 +102,7 @@ public class TaskServiceImpl implements TaskService {
 
         final Task task = taskRepository.getItem(taskId);
         return new TaskDto(task.getTaskId(), task.getUserId(), task.getTaskDescription(),
-                        task.getDateCreation(), task.isDone());
+                        task.getCreationDate(), task.isDone());
     }
 
     @Override
@@ -114,7 +114,7 @@ public class TaskServiceImpl implements TaskService {
         for(Task task: allTasks){
             if(task.getUserId().equals(userId)){
                 userTasks.add(new TaskDto(task.getTaskId(), task.getUserId(),
-                        task.getTaskDescription(), task.getDateCreation(), task.isDone()));
+                        task.getTaskDescription(), task.getCreationDate(), task.isDone()));
             }
         }
 

@@ -29,8 +29,8 @@ public class TaskController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private static TaskController taskController = new TaskController();
-    private final UserService userService = UserServiceImpl.getInstance();
 
+    private final UserService userService = UserServiceImpl.getInstance();
     private final TaskService taskService = TaskServiceImpl.getInstance();
     private final HandlerRegistry handlerRegistry = HandlerRegistry.getInstance();
 

@@ -31,3 +31,35 @@ input{
 button{
     margin-left: 25px;
 }
+
+.todolist{
+    width: 350px;
+    height: auto;
+}
+
+.column1{
+    width:30px
+}
+
+.column2{
+    width:150px
+}
+.column3{
+    width:100px
+}
+
+.column4{
+    width:50px
+}
+
+
+.done{
+    font-family: Calibri, serif;
+    color: lightgray;
+    text-decoration: line-through;
+}
+
+.normal{
+    font-family: Calibri, serif;
+    color: darkslategrey;
+}
