@@ -89,11 +89,34 @@ var TaskService = function (eventbus, events, baseUrl) {
 
     };
 
+    var _updateUserTasks = function (tokenData) {
+
+        var tokenId = tokenData.tokenId;
+        var userId = tokenData.userId;
+
+        var data;
+
+        $.post(baseUrl + "app/update-tasks",
+            {
+                tokenId: tokenId,
+                userId: userId
+
+            },
+            function (xhr) {
+
+                data = eval("(" + xhr + ")");
+                eventbus.post(events.UPDATED_TASK_LIST, data);
+
+            }, 'text');
+
+    };
+
     return {
         "createTask": _createTask,
         "markAsDone": _markTaskAsDone,
         "undoTask": _undoTask,
-        "deleteTask": _deleteTask
+        "deleteTask": _deleteTask,
+        "updateUserTasks": _updateUserTasks
     };
 };
 
@@ -104,4 +127,3 @@ if (typeof define !== 'function') {
 define(function () {
     return TaskService;
 });
-

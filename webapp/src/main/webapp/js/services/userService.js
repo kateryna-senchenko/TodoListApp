@@ -39,6 +39,14 @@ var UserService = function (eventbus, events, baseUrl) {
             function (xhr) {
 
                 var data = eval("(" + xhr + ")");
+                var _session = {
+                    tokenId: data.tokenId,
+                    userId: data.userId
+                };
+
+                sessionStorage.setItem("session", JSON.stringify(_session));
+                console.log(sessionStorage.getItem("session"));
+
                 eventbus.post(events.USER_IS_LOGGED_IN, data);
 
             }, 'text')
@@ -63,4 +71,3 @@ if (typeof define !== 'function') {
 define(function () {
     return UserService;
 });
-

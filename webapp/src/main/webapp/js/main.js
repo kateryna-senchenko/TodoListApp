@@ -16,4 +16,20 @@ define(function (require) {
     var TodoListApp = require('./todoListApp');
     var todoListApp = new TodoListApp("app", eventBus, events, userService, taskService);
 
+    if(!sessionStorage.getItem("session")) {
+
+        todoListApp.initializeRegistration();
+
+    } else {
+
+        var token = JSON.parse(sessionStorage.getItem("session"));
+
+        var tokenData = {
+            tokenId: token.tokenId,
+            userId: token.userId
+        };
+
+        taskService.updateUserTasks(tokenData);
+
+    }
 });

@@ -15,7 +15,9 @@ var Events = {
     TASK_CREATION_FAILED: 'taskCreationFailed',
     ATTEMPT_TO_MARK_TASK_DONE: 'attemptToMarkTaskDone',
     ATTEMPT_TO_UNDO_TASK: 'attemptToUndoTask',
-    ATTEMPT_TO_DELETE_TASK: 'attemptToDeleteTask'
+    ATTEMPT_TO_DELETE_TASK: 'attemptToDeleteTask',
+
+    ATTEMPT_TO_UPDATE_TASK_LIST: 'attemptToUpdateTaskList'
 
 };
 

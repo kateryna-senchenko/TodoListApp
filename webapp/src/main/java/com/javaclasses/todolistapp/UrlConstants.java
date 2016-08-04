@@ -10,4 +10,5 @@ public class UrlConstants {
     public static final String MARK_AS_DONE_URL = "/app/mark-done";
     public static final String UNDO_TASK_URL = "/app/undo";
     public static final String DELETE_TASK_URL = "/app/delete-task";
+    public static final String UPDATE_TASKS_URL = "/app/update-tasks";
 }

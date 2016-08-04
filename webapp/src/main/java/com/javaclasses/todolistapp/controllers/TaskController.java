@@ -39,6 +39,7 @@ public class TaskController {
         markTaskAsDone();
         undoTask();
         deleteTask();
+        updateUserTasks();
     }
 
     public static TaskController getInstance() {
@@ -231,6 +232,46 @@ public class TaskController {
 
             if (log.isInfoEnabled()) {
                 log.info("Deleted task {}", taskId);
+            }
+            return handlerProcessingResult;
+        });
+    }
+
+    private void updateUserTasks() {
+
+        handlerRegistry.registerHandler(new CompoundKey(UPDATE_TASKS_URL, "POST"), request -> {
+
+            final String tokenId = request.getParameter(TOKEN_ID);
+            final String userId = request.getParameter(USER_ID);
+
+            final TokenDto tokenDto =
+                    new TokenDto(new TokenId(UUID.fromString(tokenId)), new UserId(Long.valueOf(userId)));
+
+            HandlerProcessingResult handlerProcessingResult;
+
+            if (userService.findAuthenticatedUserByToken(tokenDto) == null) {
+
+                if (log.isInfoEnabled()) {
+                    log.info("Forbidden operation");
+                }
+
+                handlerProcessingResult = new HandlerProcessingResult(HttpServletResponse.SC_FORBIDDEN);
+                handlerProcessingResult.setData(ERROR_MESSAGE, "Cannot find user");
+            }
+
+
+            List<TaskDto> allUserTasks = taskService.findsAllUserTasks(new UserId(Long.valueOf(userId)));
+
+            final JSONArray allTasks = new JSONArray(allUserTasks);
+
+            handlerProcessingResult = new HandlerProcessingResult(HttpServletResponse.SC_OK);
+            handlerProcessingResult.setData(TOKEN_ID, tokenId);
+            handlerProcessingResult.setData(USER_ID, userId);
+            handlerProcessingResult.setData(TASK_LIST, allTasks.toString());
+
+            
+            if (log.isInfoEnabled()) {
+                log.info("Updated tasks of user {}", userId);
             }
             return handlerProcessingResult;
         });

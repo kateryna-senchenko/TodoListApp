@@ -222,7 +222,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
                 $('<table/>').attr('id', 'tasks').appendTo($('fieldset'));
 
-                $.each(tasks, function(idx, obj){
+                $.each(tasks, function (idx, obj) {
 
                     var checkboxId = obj.taskId.id;
                     var removeButtonId = obj.taskId.id;
@@ -273,7 +273,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
                 });
             }
 
-            $('.undone').click(function ()  {
+            $('.undone').click(function () {
                 var newTaskData = {
                     tokenId: taskData.tokenId,
                     userId: taskData.userId,
@@ -285,7 +285,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
             });
 
-            $('.checked').click(function ()  {
+            $('.checked').click(function () {
                 var newTaskData = {
                     tokenId: taskData.tokenId,
                     userId: taskData.userId,
@@ -297,7 +297,7 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
 
             });
 
-            $('.removeButton').click(function ()  {
+            $('.removeButton').click(function () {
                 var newTaskData = {
                     tokenId: taskData.tokenId,
                     userId: taskData.userId,
@@ -329,8 +329,6 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     var loginComponent = new LoginComponent();
     var todoListComponent = new TodoListComponent();
 
-    registrationComponent.init();
-
     eventbus.subscribe(events.ATTEMPT_TO_REGISTER, userService.registerUser);
     eventbus.subscribe(events.REGISTRATION_FAILED, registrationComponent.showRegistrationError);
     eventbus.subscribe(events.USER_IS_REGISTERED, registrationComponent.showSuccessfulRegistrationMessage);
@@ -345,10 +343,21 @@ var TodoListApp = function (rootDivId, eventbus, events, userService, taskServic
     eventbus.subscribe(events.ATTEMPT_TO_MARK_TASK_DONE, taskService.markAsDone);
     eventbus.subscribe(events.ATTEMPT_TO_UNDO_TASK, taskService.undoTask);
     eventbus.subscribe(events.ATTEMPT_TO_DELETE_TASK, taskService.deleteTask);
+    eventbus.subscribe(events.ATTEMPT_TO_UPDATE_TASK_LIST, taskService.updateUserTasks);
 
+    var _initializeRegistration = function(){
+
+        registrationComponent.init();
+
+    };
+
+
+    return{
+        "initializeRegistration": _initializeRegistration
+
+    }
 };
 
 define(function () {
     return TodoListApp;
 });
-
