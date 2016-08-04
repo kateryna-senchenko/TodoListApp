@@ -34,8 +34,7 @@ public class Token {
 
         Token token = (Token) o;
 
-        if (!tokenId.equals(token.tokenId)) return false;
-        return userId.equals(token.userId);
+        return tokenId.equals(token.tokenId) && userId.equals(token.userId);
 
     }
 

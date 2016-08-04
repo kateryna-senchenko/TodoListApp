@@ -30,8 +30,7 @@ public class UserDto {
 
         UserDto userDto = (UserDto) o;
 
-        if (!userId.equals(userDto.userId)) return false;
-        return email.equals(userDto.email);
+        return userId.equals(userDto.userId) && email.equals(userDto.email);
 
     }
 

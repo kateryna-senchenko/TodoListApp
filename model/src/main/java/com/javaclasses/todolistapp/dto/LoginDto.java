@@ -29,8 +29,7 @@ public class LoginDto {
 
         LoginDto loginDto = (LoginDto) o;
 
-        if (!email.equals(loginDto.email)) return false;
-        return password.equals(loginDto.password);
+        return email.equals(loginDto.email) && password.equals(loginDto.password);
 
     }
 

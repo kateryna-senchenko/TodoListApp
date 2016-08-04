@@ -34,9 +34,8 @@ public class RegistrationDto {
 
         RegistrationDto that = (RegistrationDto) o;
 
-        if (!email.equals(that.email)) return false;
-        if (!password.equals(that.password)) return false;
-        return confirmPassword.equals(that.confirmPassword);
+        return email.equals(that.email) && password.equals(that.password)
+                && confirmPassword.equals(that.confirmPassword);
 
     }
 

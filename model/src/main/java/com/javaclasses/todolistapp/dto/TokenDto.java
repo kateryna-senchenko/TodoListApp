@@ -31,8 +31,7 @@ public class TokenDto {
 
         TokenDto tokenDto = (TokenDto) o;
 
-        if (!tokenId.equals(tokenDto.tokenId)) return false;
-        return userId.equals(tokenDto.userId);
+        return tokenId.equals(tokenDto.tokenId) && userId.equals(tokenDto.userId);
 
     }
 

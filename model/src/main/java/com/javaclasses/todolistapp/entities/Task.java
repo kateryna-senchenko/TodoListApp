@@ -57,11 +57,8 @@ public class Task {
 
         Task task = (Task) o;
 
-        if (done != task.done) return false;
-        if (!taskId.equals(task.taskId)) return false;
-        if (!userId.equals(task.userId)) return false;
-        if (!taskDescription.equals(task.taskDescription)) return false;
-        return creationDate.equals(task.creationDate);
+        return done == task.done && taskId.equals(task.taskId) && userId.equals(task.userId)
+                && taskDescription.equals(task.taskDescription) && creationDate.equals(task.creationDate);
 
     }
 

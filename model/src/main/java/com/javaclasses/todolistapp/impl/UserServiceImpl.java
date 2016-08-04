@@ -131,6 +131,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findRegisteredUserById(UserId id) {
 
+        checkNotNull(id, "User id should not be null");
+
         User user = userRepository.getItem(id);
 
         return new UserDto(user.getId(), user.getEmail());
@@ -139,6 +141,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findAuthenticatedUserByToken(TokenDto token) {
 
+        checkNotNull(token, "Token should not be empty");
+
         Token userToken = tokenRepository.getItem(token.getTokenId());
 
         return findRegisteredUserById(userToken.getUserId());
@@ -146,6 +150,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(TokenDto token) {
+
+        checkNotNull(token, "Token should not be empty");
 
         tokenRepository.remove(token.getTokenId());
 

@@ -66,6 +66,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void markTaskAsDone(TaskId taskId) {
 
+        checkNotNull(taskId, "Task id should not be null");
+
         final Task task = taskRepository.getItem(taskId);
         task.setDone(true);
 
@@ -78,6 +80,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void undoTask(TaskId taskId) {
 
+        checkNotNull(taskId, "Task id should not be null");
+
         final Task task = taskRepository.getItem(taskId);
         task.setDone(false);
 
@@ -88,6 +92,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(TaskId taskId) {
+
+        checkNotNull(taskId, "Task id should not be null");
 
         taskRepository.remove(taskId);
 
@@ -100,6 +106,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDto findTaskById(TaskId taskId) {
 
+        checkNotNull(taskId, "Task id should not be null");
+
         final Task task = taskRepository.getItem(taskId);
         return new TaskDto(task.getTaskId(), task.getUserId(), task.getTaskDescription(),
                         task.getCreationDate(), task.isDone());
@@ -107,6 +115,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDto> findsAllUserTasks(UserId userId) {
+
+        checkNotNull(userId, "User id should not be null");
 
         final Collection<Task> allTasks = taskRepository.getAll();
         List<TaskDto> userTasks = new ArrayList<>();

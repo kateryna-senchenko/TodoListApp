@@ -30,8 +30,7 @@ public class TaskCreationDto {
 
         TaskCreationDto that = (TaskCreationDto) o;
 
-        if (!userId.equals(that.userId)) return false;
-        return taskDescription.equals(that.taskDescription);
+        return userId.equals(that.userId) && taskDescription.equals(that.taskDescription);
 
     }
 

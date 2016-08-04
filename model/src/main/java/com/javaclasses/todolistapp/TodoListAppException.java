@@ -1,18 +1,18 @@
 package com.javaclasses.todolistapp;
 
 /**
- * Abstract class for app exceptions
+ * Class for app exceptions
  */
-public abstract class TodoListAppException extends Exception{
+/*package*/ class TodoListAppException extends Exception{
 
     private final ErrorType errorType;
 
-    public TodoListAppException(ErrorType errorType) {
+    /*package*/ TodoListAppException(ErrorType errorType) {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public ErrorType getErrorType() {
+    /*package*/ ErrorType getErrorType() {
         return errorType;
     }
 }

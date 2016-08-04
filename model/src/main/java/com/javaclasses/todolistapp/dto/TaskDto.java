@@ -36,10 +36,6 @@ public class TaskDto {
         return taskDescription;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public boolean isDone() {
         return done;
     }
@@ -51,11 +47,9 @@ public class TaskDto {
 
         TaskDto taskDto = (TaskDto) o;
 
-        if (done != taskDto.done) return false;
-        if (!taskId.equals(taskDto.taskId)) return false;
-        if (!userId.equals(taskDto.userId)) return false;
-        if (!taskDescription.equals(taskDto.taskDescription)) return false;
-        return creationDate.equals(taskDto.creationDate);
+        return done == taskDto.done && taskId.equals(taskDto.taskId)
+                && userId.equals(taskDto.userId) && taskDescription.equals(taskDto.taskDescription)
+                && creationDate.equals(taskDto.creationDate);
 
     }
 

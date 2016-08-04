@@ -39,9 +39,7 @@ public class User {
 
         User user = (User) o;
 
-        if (!id.equals(user.id)) return false;
-        if (!email.equals(user.email)) return false;
-        return password.equals(user.password);
+        return id.equals(user.id) && email.equals(user.email) && password.equals(user.password);
 
     }
 
